@@ -62,7 +62,7 @@ def create_climate_diagram(df,
     The figure
     
     """
-    dfplot = df.loc[:,[temp_col,prec_col]].resample("M").agg({temp_col:"mean",prec_col:"sum"})
+    dfplot = df[[temp_col,prec_col]].resample('M').agg({temp_col:'mean',prec_col:'sum'})
     fig = plt.figure(figsize=(10,8))
     plt.rcParams["font.size"] = 16
 
@@ -78,6 +78,9 @@ def create_climate_diagram(df,
     ax2.xaxis.set_major_formatter(monthFmt)
     ax1.xaxis.set_major_locator(days)
     ax1.xaxis.set_major_formatter(monthFmt)
+    
+    ax2.bar(dfplot.index, height=dfplot[prec_col], color="blue", width=20, label="Precipitation")
+    ax1.plot(dfplot[temp_col], color="red", label="Temperature")
     
     # Set appropiate limits to each y-axis using the function arguments: [1P]
     ax2.set_ylim(prec_min, prec_max)
